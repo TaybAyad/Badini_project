@@ -264,27 +264,8 @@
             handled = true;
           }
 
-          // Rule 4b (NEW): Hyphen attached to the following word when between two words.
-          if (!handled && currentToken === hyphen) {
-            const [prevTokenVal, prevTokenIdx] = getPrevNonSpaceInfo(i, tokens);
-            const [nextTokenVal, nextTokenIdx] = getNextNonSpaceInfo(i, tokens);
-
-            if (
-              prevTokenVal &&
-              /^\p{L}+$/u.test(prevTokenVal) &&
-              nextTokenVal &&
-              /^\p{L}+$/u.test(nextTokenVal)
-            ) {
-              if (processedString && !processedString.endsWith(" ")) {
-                processedString += " ";
-              }
-              processedString += currentToken;
-              processedString += nextTokenVal;
-
-              i = nextTokenIdx + 1;
-              handled = true;
-            }
-          }
+          // Rule 4b (Removed): Hyphen attached to the following word when between two words.
+          // This rule block has been removed. Hyphens will now default to being separated by spaces.
 
           // Handle remaining general rules
           if (!handled) {
