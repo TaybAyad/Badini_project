@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>گهورینا یونیکودێ کوردی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- General Styling & Animated Background --- */
+      :root {
+        --bg-color: #1a1a2e;
+        --card-color: rgba(22, 22, 41, 0.7);
+        --primary-color: #4e4ecb;
+        --primary-hover: #6363e1;
+        --secondary-color: #2c9a7a;
+        --secondary-hover: #37c29a;
+        --danger-color: #c73866;
+        --text-color: #e0e0e0;
+        --border-color: rgba(255, 255, 255, 0.2);
+        --font-family-kurdish: "Vazirmatn", sans-serif;
+      }
+
+      @keyframes background-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      body {
+        font-family: var(--font-family-kurdish);
+        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b);
+        background-size: 400% 400%;
+        animation: background-pan 15s ease infinite;
+        color: var(--text-color);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      /* --- Main Converter Card --- */
+      main {
+        width: 100%;
+        max-width: 900px;
+        background: var(--card-color);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+
+      /* --- Text Area Container (Responsive Flexbox) --- */
+      .converter-container {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .text-area-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      textarea {
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        color: var(--text-color);
+        font-family: var(--font-family-kurdish);
+        font-size: 1.2rem;
+        min-height: 200px;
+        resize: vertical;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(78, 78, 203, 0.5);
+      }
+
+      #modern-output {
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      label {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      /* --- Action Buttons --- */
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.8rem 1.8rem;
+        font-family: var(--font-family-kurdish);
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+
+      #copy-btn {
+        background-color: var(--primary-color);
+      }
+      #copy-btn:hover {
+        background-color: var(--primary-hover);
+      }
+      #copy-btn.copied {
+        background-color: var(--secondary-color);
+      }
+
+      #clear-btn {
+        background-color: var(--danger-color);
+      }
+      #clear-btn:hover {
+        background-color: #e04a7b;
+      }
+
+      /* --- Responsive Design for Mobile --- */
+      @media (max-width: 768px) {
+        main {
+          padding: 1.5rem;
+        }
+        .converter-container {
+          flex-direction: column;
+        }
+        textarea {
+          min-height: 150px;
+          font-size: 1.1rem;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch; /* Makes buttons full-width */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>گهورینا یونیکودێ کوردی</h1>
+        <p>نڤیسینا کوردی یا کەڤن ل ڤێرە بنڤیسە بو نڤیسینا کوردی یا نی</p>
+      </header>
+
+      <div class="converter-container">
+        <div class="text-area-group">
+          <label for="legacy-input">نڤیسینا کەڤن (Legacy)</label>
+          <textarea
+            id="legacy-input"
+            placeholder="كورد ذ ئةوان ميللةتان بوون هةر ذ دةستثيَكا دةركةظتنا..."
+          ></textarea>
+        </div>
+        <div class="text-area-group">
+          <label for="modern-output">نڤیسینا نی (Modern)</label>
+          <textarea
+            id="modern-output"
+            readonly
+            placeholder="كورد ژ ئه‌وان ميلله‌تان بوون هه‌ر ژ ده‌ستپێكا ده‌ركه‌ڤتنا..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copy-btn" class="btn">کوپیکرنا ئەنجامی</button>
+        <button id="clear-btn" class="btn">ژێبرن</button>
+      </div>
+    </main>
+
+    <script>
+      // --- Core Conversion Logic ---
+      const legacyToModernMap = {
+        // Multi-character sequences first for correct replacement
+        رِ: "ڕ",
+        يَ: "ێ",
+        ىَ: "ێ",
+        وَ: "ۆ",
+
+        // Single characters
+        ذ: "ژ",
+        ض: "چ",
+        ط: "گ",
+        ظ: "ڤ",
+        ث: "پ",
+        ة: "ه‌", // This is 'ه' + 'َ'
+      };
+
+      function convertKurdishLegacyToModern(legacyText) {
+        let modernText = legacyText;
+        for (const [legacyChar, modernChar] of Object.entries(
+          legacyToModernMap
+        )) {
+          // Use a RegExp with the global 'g' flag to replace all occurrences
+          const regex = new RegExp(legacyChar, "g");
+          modernText = modernText.replace(regex, modernChar);
+        }
+        return modernText;
+      }
+
+      // --- DOM Element Selection ---
+      const legacyInput = document.getElementById("legacy-input");
+      const modernOutput = document.getElementById("modern-output");
+      const copyBtn = document.getElementById("copy-btn");
+      const clearBtn = document.getElementById("clear-btn");
+
+      let debounceTimer;
+
+      // --- Event Listeners ---
+
+      // Automatic conversion on input with a debounce
+      legacyInput.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          const legacyText = legacyInput.value;
+          const convertedText = convertKurdishLegacyToModern(legacyText);
+          modernOutput.value = convertedText;
+        }, 200); // Wait 200ms after user stops typing
+      });
+
+      // Copy button functionality
+      copyBtn.addEventListener("click", () => {
+        if (modernOutput.value) {
+          navigator.clipboard
+            .writeText(modernOutput.value)
+            .then(() => {
+              // Success feedback
+              copyBtn.textContent = "هاتە کوپی کرن";
+              copyBtn.classList.add("copied");
+
+              // Revert back after 2 seconds
+              setTimeout(() => {
+                copyBtn.textContent = "کوپیکرنا ئەنجامی";
+                copyBtn.classList.remove("copied");
+              }, 2000);
+            })
+            .catch((err) => {
+              console.error("Failed to copy text: ", err);
+              alert("کوپی کرن یا سەرکەفتی نەبوو");
+            });
+        }
+      });
+
+      // Clear button functionality
+      clearBtn.addEventListener("click", () => {
+        legacyInput.value = "";
+        modernOutput.value = "";
+        legacyInput.focus(); // Set focus back to the input area
+      });
+    </script>
+  </body>
+</html>
