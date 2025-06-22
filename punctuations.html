@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ڕێکخەرێ دەقێ کوردی</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- General Styling & Animated Background (Design from AliK_to_unicode.html) --- */
+      :root {
+        --bg-color: #1a1a2e;
+        --card-color: rgba(22, 22, 41, 0.7);
+        --primary-color: #4e4ecb;
+        --primary-hover: #6363e1;
+        --secondary-color: #2c9a7a; /* Used for copy success */
+        --danger-color: #c73866;
+        --text-color: #e0e0e0;
+        --border-color: rgba(255, 255, 255, 0.2);
+        --font-family-kurdish: "Vazirmatn", sans-serif;
+      }
+
+      @keyframes background-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      body {
+        font-family: var(--font-family-kurdish);
+        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b);
+        background-size: 400% 400%;
+        animation: background-pan 15s ease infinite;
+        color: var(--text-color);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+
+      /* --- Main Converter Card --- */
+      main {
+        width: 100%;
+        max-width: 900px;
+        background: var(--card-color);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      h1 {
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+
+      /* --- Text Area Container --- */
+      .converter-container {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .text-area-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      textarea {
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        color: var(--text-color);
+        font-family: var(--font-family-kurdish);
+        font-size: 1.2rem;
+        min-height: 250px;
+        resize: vertical;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(78, 78, 203, 0.5);
+      }
+
+      #finalOutput {
+        background: rgba(0, 0, 0, 0.2);
+      }
+
+      label {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+
+      /* --- Action Buttons --- */
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 0.8rem 1.8rem;
+        font-family: var(--font-family-kurdish);
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+
+      #copyBtn {
+        background-color: var(--primary-color);
+      }
+      #copyBtn:hover {
+        background-color: var(--primary-hover);
+      }
+      #copyBtn.copied {
+        background-color: var(--secondary-color);
+      }
+
+      #clearBtn {
+        background-color: var(--danger-color);
+      }
+      #clearBtn:hover {
+        background-color: #e04a7b;
+      }
+
+      /* --- Responsive Design for Mobile --- */
+      @media (max-width: 768px) {
+        main {
+          padding: 1.5rem;
+        }
+        .converter-container {
+          flex-direction: column;
+        }
+        textarea {
+          min-height: 180px;
+          font-size: 1.1rem;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>ڕێکخەرێ دەقێ کوردی</h1>
+        <p>دەقێ خو ل ڤێرێ بنڤیسە دا خاڵبەندی و بوشایی بهێنە ڕێکخستن</p>
+      </header>
+
+      <div class="converter-container">
+        <div class="text-area-group">
+          <label for="userInput">دەقێ خو ل ڤێرێ بنڤیسە</label>
+          <textarea id="userInput" placeholder="">
+ئەرێ تە پسیارەك هەیە ? ئەر تو دزانی      ؟ د ناڤبەرا سالا (   ( ( ١٩١٤-١٩١٦  ) )   ) جەنگێ   جیهانی  یێ  ئێکێ بوو. نێزیکی ١,٤٥٣,٢٢٣ مروڤ هاتیەن کوشتن  !</textarea
+          >
+        </div>
+        <div class="text-area-group">
+          <label for="finalOutput">ئەنجامێ ڕێکخستی</label>
+          <textarea id="finalOutput" readonly placeholder=""></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copyBtn" class="btn">کوپیکرنا ئەنجامی</button>
+        <button id="clearBtn" class="btn">ژێبرن</button>
+      </div>
+    </main>
+
+    <script>
+      // --- PART 1: LEGACY TO MODERN CONVERSION LOGIC ---
+      const legacyToModernMap = {
+        رِ: "ڕ",
+        يَ: "ێ",
+        ىَ: "ێ",
+        وَ: "ۆ",
+        ذ: "ژ",
+        ض: "چ",
+        ط: "گ",
+        ظ: "ڤ",
+        ث: "پ",
+        ة: "ه‌",
+      };
+
+      function convertKurdishLegacyToModern(legacyText) {
+        let modernText = legacyText;
+        for (const [legacyChar, modernChar] of Object.entries(
+          legacyToModernMap
+        )) {
+          const regex = new RegExp(legacyChar, "g");
+          modernText = modernText.replace(regex, modernChar);
+        }
+        return modernText;
+      }
+
+      // --- PART 2: PUNCTUATION & SPACING NORMALIZATION LOGIC ---
+      function normalizeKurdishPunctuation(text) {
+        let processedText = text;
+
+        // STAGE A: Standardize Punctuation Characters
+        processedText = processedText.replace(/\?/g, "؟");
+        // **FIXED**: Use \p{N} to correctly handle Unicode numbers like ١,٢٣٤
+        processedText = processedText.replace(/(?<!\p{N}),(?!\p{N})/gu, "،");
+
+        // STAGE B: Handle Special Spacing Cases
+        processedText = processedText.replace(/(\p{N}+)-(\p{N}+)/gu, "$1 - $2");
+
+        // STAGE C: Correct General Punctuation Spacing
+        const openingPunc = "\\({\\[«";
+        const closingPunc = "\\)}\\]»";
+        const middleEndPunc = "،؛؟\\.!:";
+        const allClosingMiddle = closingPunc + middleEndPunc;
+
+        // **IMPROVEMENT**: Loop to handle multiple spaces/punctuations like `( ( (`
+        let previousText;
+        while (previousText !== processedText) {
+          previousText = processedText;
+          // Rule: Remove space BEFORE a closing or middle/end punctuation.
+          processedText = processedText.replace(
+            new RegExp(`\\s+([${allClosingMiddle}])`, "g"),
+            "$1"
+          );
+          // Rule: Remove space AFTER an opening punctuation.
+          processedText = processedText.replace(
+            new RegExp(`([${openingPunc}])\\s+`, "g"),
+            "$1"
+          );
+        }
+
+        // --- These rules ADD spaces, so they run AFTER the cleanup loop ---
+
+        // Rule: Ensure space AFTER a closing/middle punctuation if followed by a letter/number/opener.
+        processedText = processedText.replace(
+          new RegExp(
+            `([${allClosingMiddle}])([\\p{L}\\p{N}${openingPunc}])`,
+            "gu"
+          ),
+          "$1 $2"
+        );
+        // Rule: Ensure space BEFORE an opening punctuation if preceded by a letter/number/closer.
+        processedText = processedText.replace(
+          new RegExp(`([\\p{L}\\p{N}${closingPunc}])([${openingPunc}])`, "gu"),
+          "$1 $2"
+        );
+
+        // STAGE D: Final cleanup for any leftover multiple spaces
+        processedText = processedText.replace(/\s+/g, " ").trim();
+        return processedText;
+      }
+
+      // --- PART 3: COMBINED PROCESSING & DOM MANIPULATION ---
+      const userInput = document.getElementById("userInput");
+      const finalOutput = document.getElementById("finalOutput");
+      const copyBtn = document.getElementById("copyBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      let debounceTimer;
+
+      function processText(rawText) {
+        const modernText = convertKurdishLegacyToModern(rawText);
+        const normalizedText = normalizeKurdishPunctuation(modernText);
+        return normalizedText;
+      }
+
+      function updateOutput() {
+        const rawText = userInput.value;
+        const processedResult = processText(rawText);
+        finalOutput.value = processedResult;
+      }
+
+      userInput.addEventListener("input", () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(updateOutput, 200);
+      });
+
+      copyBtn.addEventListener("click", () => {
+        if (finalOutput.value) {
+          navigator.clipboard
+            .writeText(finalOutput.value)
+            .then(() => {
+              copyBtn.textContent = "هاتە کوپی کرن";
+              copyBtn.classList.add("copied");
+              setTimeout(() => {
+                copyBtn.textContent = "کوپیکرنا ئەنجامی";
+                copyBtn.classList.remove("copied");
+              }, 2000);
+            })
+            .catch((err) => {
+              console.error("Failed to copy text: ", err);
+              alert("کوپی کرن یا سەرکەفتی نەبوو");
+            });
+        }
+      });
+
+      clearBtn.addEventListener("click", () => {
+        userInput.value = "";
+        finalOutput.value = "";
+        userInput.focus();
+      });
+
+      // **NEW**: Process the initial text when the page loads
+      document.addEventListener("DOMContentLoaded", updateOutput);
+    </script>
+  </body>
+</html>
