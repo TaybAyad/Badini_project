@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>گۆڕینی ژمارە و هێماکان</title>
+    <style>
+      /* Basic CSS for styling the page */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background-color: #f0f2f5;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start; /* Align to top */
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .converter-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #1c1e21;
+        margin-bottom: 20px;
+      }
+
+      .label {
+        display: block;
+        text-align: right;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #606770;
+      }
+
+      #textInput {
+        width: 100%;
+        min-height: 150px;
+        box-sizing: border-box;
+        padding: 12px;
+        font-size: 1.2em;
+        font-family: "Tahoma", "Arial", sans-serif;
+        border: 1px solid #dddfe2;
+        border-radius: 8px;
+        text-align: right;
+        direction: rtl;
+        resize: vertical;
+        margin-bottom: 15px;
+      }
+
+      #convertBtn {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 0.2s, transform 0.1s;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+      }
+
+      #convertBtn:hover {
+        background-color: #0069d9;
+      }
+
+      #convertBtn:active {
+        transform: scale(0.98);
+      }
+
+      #convertBtn:disabled {
+        background-color: #0056b3;
+        cursor: wait;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .result-box {
+        background-color: #f7f7f7;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        min-height: 150px;
+      }
+
+      #resultOutput {
+        font-size: 1.3em;
+        color: #333;
+        direction: rtl;
+        text-align: right;
+        font-family: "Tahoma", "Arial", sans-serif;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="converter-container">
+      <h1>گهورینا ژمارێ بو نڤیسانێ</h1>
+
+      <label for="textInput" class="label">ل ڤێرێ بنڤیسە:</label>
+      <textarea
+        id="textInput"
+        placeholder="بو نموونە: ل سالا ٢٠٢٤ێ یان 2024ێ بهایێ کرینێ 500$ بوون یان ٥٠٠$ بوون، و 25% یان ٢٥% داشکاندن لسەر هەبوو"
+      ></textarea>
+
+      <button id="convertBtn">
+        <span id="btn-text">گهورین</span>
+        <div id="btn-icon"></div>
+      </button>
+
+      <label for="resultOutput" class="label">ئەنجام:</label>
+      <div class="result-box">
+        <p id="resultOutput"></p>
+      </div>
+    </div>
+
+    <script>
+      // --- START OF JAVASCRIPT LOGIC ---
+
+      const _ones = {
+        0: "سفر",
+        1: "ئێك",
+        2: "دوو",
+        3: "سێ",
+        4: "چار",
+        5: "پێنج",
+        6: "شەش",
+        7: "حەفت",
+        8: "هەشت",
+        9: "نەهـ",
+      };
+      const _teens = {
+        11: "یازدە",
+        12: "دوازدە",
+        13: "سێزدە",
+        14: "چاردە",
+        15: "پازدە",
+        16: "شازدە",
+        17: "هەڤدە",
+        18: "هەژدە",
+        19: "نۆزدە",
+      };
+      const _tens = {
+        10: "دەهـ",
+        20: "بیست",
+        30: "سیهـ",
+        40: "چل",
+        50: "پێنجی",
+        60: "شێست",
+        70: "حەفتێ",
+        80: "هەشتێ",
+        90: "نۆت",
+      };
+      const _scales = {
+        1: "هزار",
+        2: "ملیون",
+        3: "ملیار",
+        4: "ترلیۆن",
+      };
+      const _hundred = "سەد";
+      const _negative = "سالب";
+      const _connector = "و";
+
+      // --- New Helper Function ---
+      // This function converts Eastern Arabic numerals (٠-٩) to Western Arabic numerals (0-9)
+      function normalizeNumerals(text) {
+        const easternToArabic = {
+          "٠": "0",
+          "١": "1",
+          "٢": "2",
+          "٣": "3",
+          "٤": "4",
+          "٥": "5",
+          "٦": "6",
+          "٧": "7",
+          "٨": "8",
+          "٩": "9",
+        };
+        // Use a regular expression to find all Eastern Arabic numerals and replace them
+        return text.replace(/[٠-٩]/g, (char) => easternToArabic[char]);
+      }
+
+      function _convertLessThanThousand(number) {
+        if (number === 0) return "";
+        let parts = [];
+        if (number >= 100) {
+          const hundredsDigit = Math.floor(number / 100);
+          if (hundredsDigit > 1) parts.push(_ones[hundredsDigit]);
+          parts.push(_hundred);
+          number %= 100;
+        }
+        if (number > 0 && parts.length > 0) parts.push(_connector);
+        if (number >= 1 && number <= 9) parts.push(_ones[number]);
+        else if (number === 10) parts.push(_tens[10]);
+        else if (number >= 11 && number <= 19) parts.push(_teens[number]);
+        else if (number >= 20) {
+          const tensDigit = Math.floor(number / 10);
+          const onesDigit = number % 10;
+          parts.push(_tens[tensDigit * 10]);
+          if (onesDigit > 0) {
+            parts.push(_connector);
+            parts.push(_ones[onesDigit]);
+          }
+        }
+        return parts.join(" ");
+      }
+
+      function convertToKurdishText(number) {
+        if (!Number.isInteger(number))
+          throw new Error("Input must be an integer.");
+        if (number === 0) return _ones[0];
+        let prefix = "";
+        if (number < 0) {
+          prefix = _negative + " ";
+          number = Math.abs(number);
+        }
+        let chunks = [];
+        while (number > 0) {
+          chunks.push(number % 1000);
+          number = Math.floor(number / 1000);
+        }
+        if (chunks.length === 0) return "";
+        const resultParts = [];
+        for (let i = chunks.length - 1; i >= 0; i--) {
+          const chunk = chunks[i];
+          if (chunk === 0) continue;
+          const chunkText = _convertLessThanThousand(chunk);
+          if (i > 0) {
+            const scaleName = _scales[i];
+            resultParts.push(
+              chunk === 1 ? scaleName : `${chunkText} ${scaleName}`
+            );
+          } else {
+            resultParts.push(chunkText);
+          }
+        }
+        const connectorStr = ` ${_connector} `;
+        return prefix + resultParts.join(connectorStr);
+      }
+
+      function convertNumbersInText(text) {
+        const numberPattern = /(-?\d+)\s*(\$|%)?/g;
+
+        function replacer(fullMatch, numberStr, symbol) {
+          const numberInt = parseInt(numberStr, 10);
+          const kurdishText = convertToKurdishText(numberInt);
+
+          if (symbol === "$") {
+            return ` ${kurdishText} دۆلار `;
+          } else if (symbol === "%") {
+            return ` ${kurdishText} ژ سەدێ `;
+          } else {
+            return ` ${kurdishText} `;
+          }
+        }
+
+        return text.replace(numberPattern, replacer);
+      }
+
+      // --- UI Interaction Logic ---
+      document.addEventListener("DOMContentLoaded", () => {
+        const textInput = document.getElementById("textInput");
+        const resultOutput = document.getElementById("resultOutput");
+        const convertBtn = document.getElementById("convertBtn");
+        const btnText = document.getElementById("btn-text");
+        const btnIcon = document.getElementById("btn-icon");
+
+        function performConversion() {
+          const inputText = textInput.value;
+          if (inputText.trim() === "") {
+            resultOutput.textContent = "";
+            return;
+          }
+
+          // --- Modified Line ---
+          // First, normalize all numerals to the 0-9 format
+          const normalizedText = normalizeNumerals(inputText);
+
+          // Then, run the conversion on the normalized text
+          const convertedText = convertNumbersInText(normalizedText);
+          resultOutput.textContent = convertedText;
+        }
+
+        convertBtn.addEventListener("click", () => {
+          convertBtn.disabled = true;
+          btnText.textContent = "گهورین...";
+          btnIcon.innerHTML = '<div class="spinner"></div>';
+
+          setTimeout(() => {
+            performConversion();
+            btnText.textContent = "ئەنجام درا";
+            btnIcon.innerHTML =
+              '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>';
+
+            setTimeout(() => {
+              btnText.textContent = "گهورین";
+              btnIcon.innerHTML = "";
+              convertBtn.disabled = false;
+            }, 1500);
+          }, 500);
+        });
+      });
+    </script>
+  </body>
+</html>
