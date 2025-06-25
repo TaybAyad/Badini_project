@@ -12,7 +12,6 @@
     />
 
     <style>
-      /* --- General Styling & Animated Background (Design from AliK_to_unicode.html) --- */
       :root {
         --bg-color: #1a1a2e;
         --card-color: rgba(22, 22, 41, 0.7);
@@ -52,7 +51,6 @@
         box-sizing: border-box;
       }
 
-      /* --- Main Converter Card --- */
       main {
         width: 100%;
         max-width: 900px;
@@ -76,7 +74,6 @@
         margin-bottom: 0.5rem;
       }
 
-      /* --- Text Area Container --- */
       .converter-container {
         display: flex;
         gap: 1.5rem;
@@ -119,7 +116,6 @@
         font-weight: bold;
       }
 
-      /* --- Action Buttons --- */
       .actions {
         display: flex;
         justify-content: center;
@@ -160,7 +156,6 @@
         background-color: #e04a7b;
       }
 
-      /* --- Responsive Design for Mobile --- */
       @media (max-width: 768px) {
         main {
           padding: 1.5rem;
@@ -189,13 +184,21 @@
       <div class="converter-container">
         <div class="text-area-group">
           <label for="userInput">دەقێ خو ل ڤێرێ بنڤیسە</label>
-          <textarea id="userInput" placeholder="">
-ئەرێ تە پسیارەك هەیە ? ئەر تو دزانی      ؟ د ناڤبەرا سالا (   ( ( ١٩١٤-١٩١٦  ) )   ) جەنگێ   جیهانی  یێ  ئێکێ بوو. نێزیکی ١,٤٥٣,٢٢٣ مروڤ هاتیەن کوشتن  !</textarea
+          <textarea id="userInput" placeholder="دەقێ خو ل ڤێرێ بنڤیسە...">
+سڵاڤ ،چۆنی؟ ئەڤە تێکستەکێ تێستە.
+
+ژمارەکان دناڤبەرا ٢٥-٢٨ دانە.
+ئەڤ پرۆژە د سالێن(   ( ( ١٩٩٤-١٩٩٥  ) )   )دا هاتە دروستکرن.
+نرخ: 1,500,000 دینارە, و ئەرزانە! راستە?</textarea
           >
         </div>
         <div class="text-area-group">
           <label for="finalOutput">ئەنجامێ ڕێکخستی</label>
-          <textarea id="finalOutput" readonly placeholder=""></textarea>
+          <textarea
+            id="finalOutput"
+            readonly
+            placeholder="ئەنجام دێ ل ڤێرێ دیار بیت..."
+          ></textarea>
         </div>
       </div>
 
@@ -206,110 +209,104 @@
     </main>
 
     <script>
-      // --- PART 1: LEGACY TO MODERN CONVERSION LOGIC ---
-      const legacyToModernMap = {
-        رِ: "ڕ",
-        يَ: "ێ",
-        ىَ: "ێ",
-        وَ: "ۆ",
-        ذ: "ژ",
-        ض: "چ",
-        ط: "گ",
-        ظ: "ڤ",
-        ث: "پ",
-        ة: "ه‌",
-      };
+      // --- PART 1: THE NEW, COMPLETE NORMALIZATION LOGIC ---
 
-      function convertKurdishLegacyToModern(legacyText) {
-        let modernText = legacyText;
-        for (const [legacyChar, modernChar] of Object.entries(
-          legacyToModernMap
-        )) {
-          const regex = new RegExp(legacyChar, "g");
-          modernText = modernText.replace(regex, modernChar);
-        }
-        return modernText;
+      function normalizeKurdishText(text) {
+        // Split text into lines, remove empty lines, process each line, then join back.
+        const lines = text.split("\n");
+        const processedLines = lines
+          .map((line) => normalizeLine(line)) // Process each line individually
+          .filter((line) => line.length > 0); // Remove any resulting empty lines
+
+        return processedLines.join("\n");
       }
 
-      // --- PART 2: PUNCTUATION & SPACING NORMALIZATION LOGIC ---
-      function normalizeKurdishPunctuation(text) {
-        let processedText = text;
+      function normalizeLine(line) {
+        let processedLine = line;
 
-        // STAGE A: Standardize Punctuation Characters
-        processedText = processedText.replace(/\?/g, "؟");
-        // **FIXED**: Use \p{N} to correctly handle Unicode numbers like ١,٢٣٤
-        processedText = processedText.replace(/(?<!\p{N}),(?!\p{N})/gu, "،");
+        // --- STAGE A: Standardize Punctuation Characters ---
+        processedLine = processedLine.replace(/\?/g, "؟");
 
-        // STAGE B: Handle Special Spacing Cases
-        processedText = processedText.replace(/(\p{N}+)-(\p{N}+)/gu, "$1 - $2");
+        // Replace comma (,) with (،) ONLY if not between two numbers.
+        // \p{N} is a Unicode-aware way to match any number (e.g., 1, 2, ٣, ٤).
+        // The 'u' flag is required for \p{N} to work.
+        // The '(?<!...)' is a negative lookbehind.
+        processedLine = processedLine.replace(/(?<!\p{N}),(?!\p{N})/gu, "،");
 
-        // STAGE C: Correct General Punctuation Spacing
+        // --- STAGE B: Correct Spacing for Special Cases ---
+
+        // Add space around a hyphen between two numbers.
+        processedLine = processedLine.replace(/(\p{N}+)-(\p{N}+)/gu, "$1 - $2");
+
+        // --- STAGE C: Correct General Punctuation Spacing ---
+
         const openingPunc = "\\({\\[«";
         const closingPunc = "\\)}\\]»";
         const middleEndPunc = "،؛؟\\.!:";
         const allClosingMiddle = closingPunc + middleEndPunc;
 
-        // **IMPROVEMENT**: Loop to handle multiple spaces/punctuations like `( ( (`
+        // Loop to handle repeated cases like `( ( ( text ) ) )`
         let previousText;
-        while (previousText !== processedText) {
-          previousText = processedText;
+        do {
+          previousText = processedLine;
           // Rule: Remove space BEFORE a closing or middle/end punctuation.
-          processedText = processedText.replace(
+          processedLine = processedLine.replace(
             new RegExp(`\\s+([${allClosingMiddle}])`, "g"),
             "$1"
           );
           // Rule: Remove space AFTER an opening punctuation.
-          processedText = processedText.replace(
+          processedLine = processedLine.replace(
             new RegExp(`([${openingPunc}])\\s+`, "g"),
             "$1"
           );
-        }
+        } while (previousText !== processedLine);
 
         // --- These rules ADD spaces, so they run AFTER the cleanup loop ---
 
         // Rule: Ensure space AFTER a closing/middle punctuation if followed by a letter/number/opener.
-        processedText = processedText.replace(
+        // \p{L} is a Unicode-aware way to match any letter from any language.
+        processedLine = processedLine.replace(
           new RegExp(
             `([${allClosingMiddle}])([\\p{L}\\p{N}${openingPunc}])`,
             "gu"
           ),
           "$1 $2"
         );
+
         // Rule: Ensure space BEFORE an opening punctuation if preceded by a letter/number/closer.
-        processedText = processedText.replace(
+        processedLine = processedLine.replace(
           new RegExp(`([\\p{L}\\p{N}${closingPunc}])([${openingPunc}])`, "gu"),
           "$1 $2"
         );
 
-        // STAGE D: Final cleanup for any leftover multiple spaces
-        processedText = processedText.replace(/\s+/g, " ").trim();
-        return processedText;
+        // --- STAGE D: Final cleanup for the line ---
+        processedLine = processedLine.replace(/\s+/g, " ").trim();
+
+        return processedLine;
       }
 
-      // --- PART 3: COMBINED PROCESSING & DOM MANIPULATION ---
+      // --- PART 2: DOM MANIPULATION & EVENT LISTENERS ---
+
       const userInput = document.getElementById("userInput");
       const finalOutput = document.getElementById("finalOutput");
       const copyBtn = document.getElementById("copyBtn");
       const clearBtn = document.getElementById("clearBtn");
       let debounceTimer;
 
-      function processText(rawText) {
-        const modernText = convertKurdishLegacyToModern(rawText);
-        const normalizedText = normalizeKurdishPunctuation(modernText);
-        return normalizedText;
-      }
-
       function updateOutput() {
         const rawText = userInput.value;
-        const processedResult = processText(rawText);
+        // The new function is now the only one we need to call.
+        const processedResult = normalizeKurdishText(rawText);
         finalOutput.value = processedResult;
       }
 
+      // Live update with a short delay (debounce) to avoid lag while typing
       userInput.addEventListener("input", () => {
         clearTimeout(debounceTimer);
         debounceTimer = setTimeout(updateOutput, 200);
       });
 
+      // Copy button functionality
       copyBtn.addEventListener("click", () => {
         if (finalOutput.value) {
           navigator.clipboard
@@ -329,13 +326,14 @@
         }
       });
 
+      // Clear button functionality
       clearBtn.addEventListener("click", () => {
         userInput.value = "";
         finalOutput.value = "";
         userInput.focus();
       });
 
-      // **NEW**: Process the initial text when the page loads
+      // Process the initial text when the page loads
       document.addEventListener("DOMContentLoaded", updateOutput);
     </script>
   </body>
