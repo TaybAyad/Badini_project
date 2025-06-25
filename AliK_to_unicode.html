@@ -99,7 +99,7 @@
         color: var(--text-color);
         font-family: var(--font-family-kurdish);
         font-size: 1.2rem;
-        min-height: 200px;
+        min-height: 250px;
         resize: vertical;
         transition: border-color 0.3s, box-shadow 0.3s;
       }
@@ -170,7 +170,7 @@
           flex-direction: column;
         }
         textarea {
-          min-height: 150px;
+          min-height: 200px;
           font-size: 1.1rem;
         }
         .actions {
@@ -190,14 +190,20 @@
       <div class="converter-container">
         <div class="text-area-group">
           <label for="legacy-input">نڤیسینا کەڤن (Legacy)</label>
-          <textarea id="legacy-input" placeholder="">
+          <textarea id="legacy-input" placeholder="نڤیسینا خۆ ل ڤێرە بنڤیسە...">
+منداألاني كوردستان جوانن.
+
 ثيَشةكى
-كورد ذ ئةوان ميللةتان بوون هةر ذ دةستثيَكا دةركةظتنا ئاينى ئيسلامىَ ثةيوةندى ب ثيَغةمبةرى (س) كرية و ضووينة وةلاتىَ حيجازىَ و ئاكنجيبووينة، هةم ذ بةر طرنطي و سةنطا ويَيا ئايني و هةروةسا...</textarea
+كورد ذ ئةوان ميللةتان بوون هةر ذ دةستثيَكا دةركةظتنا ئاينى ئيسلامىَ ثةيوةندى ب ثيَغةمبةرى (س) كرية و ضووينة وةلاتىَ حيجازىَ و ئاكنجيبووينة، هةم ذ بةر طرنطي و سةنطا ويَيا ئايني و هةروةسا وةكو ئيَكةم جهىَ ضريسكا ئاينىَ ئسلامىَ لىَ هةلبووى و هةبوونا حةرمةين ثيرؤز و ديسا وةكو منبةر و بنطةهىَ زانين و زانستىَ، مانا وان ل حيجازىَ شيايينة رِوَليَ خوَ د هةمى لاينين ذيانيَدا ببينن.</textarea
           >
         </div>
         <div class="text-area-group">
           <label for="modern-output">نڤیسینا نی (Modern)</label>
-          <textarea id="modern-output" readonly placeholder=""></textarea>
+          <textarea
+            id="modern-output"
+            readonly
+            placeholder="ئەنجام دێ ل ڤێرە دیار بیت..."
+          ></textarea>
         </div>
       </div>
 
@@ -210,19 +216,23 @@
     <script>
       // --- Core Conversion Logic ---
       const legacyToModernMap = {
-        // Multi-character sequences first for correct replacement
-        رِ: "ڕ",
-        يَ: "ێ",
-        ىَ: "ێ",
-        وَ: "ۆ",
+        // Multi-character sequences (MUST be processed first for correct replacement)
+        "لأ": "ڵا", // ADDED: Lam with Alef with Hamza Above -> LLA
+        "رِ": "ڕ",
+        "يَ": "ێ",
+        "ىَ": "ێ",
+        "وَ": "ۆ",
 
-        // Single characters
-        ذ: "ژ",
-        ض: "چ",
-        ط: "گ",
-        ظ: "ڤ",
-        ث: "پ",
-        ة: "ه‌", // This is 'ه' + 'َ'
+        // Single character replacements
+        "ي": "ی", // ARABIC YEH (U+064A) -> FARSI/KURDISH YEH (U+06CC)
+        "ى": "ی", // ALEF MAKSURA (U+0649) -> FARSI/KURDISH YEH (U+06CC)
+        "ؤ": "ۆ", // WAW WITH HAMZA (U+0624) -> OE (U+06D5)
+        "ذ": "ژ", // DHAL (U+0630) -> JEH (U+0698)
+        "ض": "چ", // SAD (U+0636) -> TCHEH (U+0686)
+        "ط": "گ", // TAH (U+0637) -> GAF (U+06AF)
+        "ظ": "ڤ", // ZAH (U+0638) -> VEH (U+06A4)
+        "ث": "پ", // THEH (U+062B) -> PEH (U+067E)
+        "ة": "ه‌", // TEH MARBUTA (U+0629) -> HEH (U+0647) + FATHA (U+064E)
       };
 
       function convertKurdishLegacyToModern(legacyText) {
@@ -230,7 +240,7 @@
         for (const [legacyChar, modernChar] of Object.entries(
           legacyToModernMap
         )) {
-          // Use a RegExp with the global 'g' flag to replace all occurrences
+          // Use a RegExp with the global 'g' flag to replace all occurrences.
           const regex = new RegExp(legacyChar, "g");
           modernText = modernText.replace(regex, modernChar);
         }
@@ -245,16 +255,19 @@
 
       let debounceTimer;
 
+      // --- Main Conversion Function ---
+      function performConversion() {
+        const legacyText = legacyInput.value;
+        const convertedText = convertKurdishLegacyToModern(legacyText);
+        modernOutput.value = convertedText;
+      }
+
       // --- Event Listeners ---
 
-      // Automatic conversion on input with a debounce
+      // Automatic conversion on input with a debounce to improve performance
       legacyInput.addEventListener("input", () => {
         clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(() => {
-          const legacyText = legacyInput.value;
-          const convertedText = convertKurdishLegacyToModern(legacyText);
-          modernOutput.value = convertedText;
-        }, 200); // Wait 200ms after user stops typing
+        debounceTimer = setTimeout(performConversion, 200); // Wait 200ms after user stops typing
       });
 
       // Copy button functionality
@@ -286,6 +299,10 @@
         modernOutput.value = "";
         legacyInput.focus(); // Set focus back to the input area
       });
+
+      // --- Initial Conversion on Page Load ---
+      // Run the conversion once when the page loads for the default text.
+      document.addEventListener("DOMContentLoaded", performConversion);
     </script>
   </body>
 </html>
