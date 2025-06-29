@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>گهورینا یونیکودێ کوردی</title>
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- External JavaScript (deferred to load after HTML) -->
+    <script src="js/script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1 id="main-title">گهورینا یونیکودێ کوردی</h1>
+        <p id="main-subtitle">جۆرێ گهورینێ هەلبژێرە و نڤیسینا خۆ بنڤیسە</p>
+      </header>
+
+      <!-- Converter Type Selection -->
+      <fieldset class="converter-options">
+        <legend>جۆرێ گهورینێ هەلبژێرە</legend>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" name="converter-type" value="alik2" checked />
+            <span>عەلی-ک</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="converter-type" value="aliweb" />
+            <span>عەلی وێب</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="converter-type" value="dylan" />
+            <span>دیلان</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" name="converter-type" value="zarnegar" />
+            <span>زەڕنەگار</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="converter-container">
+        <div class="text-area-group">
+          <label for="legacy-input">نڤیسینا کەڤن (Legacy)</label>
+          <textarea
+            id="legacy-input"
+            placeholder="نڤیسینا خۆ ل ڤێرە بنڤیسە..."
+          ></textarea>
+        </div>
+        <div class="text-area-group">
+          <label for="modern-output">نڤیسینا نی (Modern)</label>
+          <textarea
+            id="modern-output"
+            readonly
+            placeholder="ئەنجام دێ ل ڤێرە دیار بیت..."
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="copy-btn" class="btn">کوپیکرنا ئەنجامی</button>
+        <button id="clear-btn" class="btn">ژێبرن</button>
+      </div>
+    </main>
+  </body>
+</html>
