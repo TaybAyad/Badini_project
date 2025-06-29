@@ -113,6 +113,7 @@ const converters = {
         لاٌ: "ڵا",
         يٌ: "ێ",
         یٌ: "ێ",
+        ىٌ: "ێ",
         "ه‏": "ە", // Note: The second char is an invisible RIGHT-TO-LEFT MARK (U+200F)
         لٌ: "ڵ",
         رٍ: "ڕ",
