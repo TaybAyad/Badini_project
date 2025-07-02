@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>گهورینا ژمارێ بو نڤیسانێ</title>
@@ -12,70 +12,205 @@
     />
     <style>
       :root {
-        --bg-color: #1a1a2e; --card-color: rgba(22, 22, 41, 0.75);
-        --primary-color: #4e4ecb; --primary-hover: #6363e1;
-        --secondary-color: #2c9a7a; --danger-color: #c73866;
-        --text-color: #e0e0e0; --border-color: rgba(255, 255, 255, 0.2);
+        --bg-color: #1a1a2e;
+        --card-color: rgba(22, 22, 41, 0.75);
+        --primary-color: #4e4ecb;
+        --primary-hover: #6363e1;
+        --secondary-color: #2c9a7a;
+        --danger-color: #c73866;
+        --text-color: #e0e0e0;
+        --border-color: rgba(255, 255, 255, 0.2);
         --font-family-kurdish: "Vazirmatn", sans-serif;
       }
-      @keyframes background-pan { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+      @keyframes background-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
       body {
         font-family: var(--font-family-kurdish);
         background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b);
-        background-size: 400% 400%; animation: background-pan 15s ease infinite;
-        color: var(--text-color); margin: 0; display: flex; justify-content: center;
-        align-items: center; min-height: 100vh; padding: 1rem; box-sizing: border-box;
+        background-size: 400% 400%;
+        animation: background-pan 15s ease infinite;
+        color: var(--text-color);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1rem;
+        box-sizing: border-box;
       }
       main {
-        width: 100%; max-width: 900px; background: var(--card-color); border-radius: 20px;
-        padding: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-        border: 1px solid var(--border-color); transition: all 0.3s ease;
+        width: 100%;
+        max-width: 900px;
+        background: var(--card-color);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
       }
-      header { text-align: center; margin-bottom: 2rem; }
-      h1 { color: #fff; margin-bottom: 0.5rem; }
-      header p { color: var(--text-color); opacity: 0.8; }
-      .converter-container { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
-      .text-area-group { flex: 1; display: flex; flex-direction: column; }
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      h1 {
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      header p {
+        color: var(--text-color);
+        opacity: 0.8;
+      }
+      .converter-container {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .text-area-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
       textarea {
-        flex-grow: 1; background: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-color);
-        border-radius: 10px; padding: 1rem; color: var(--text-color);
-        font-family: var(--font-family-kurdish); font-size: 1.2rem;
-        min-height: 250px; resize: vertical; transition: border-color 0.3s, box-shadow 0.3s;
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        color: var(--text-color);
+        font-family: var(--font-family-kurdish);
+        font-size: 1.2rem;
+        min-height: 250px;
+        resize: vertical;
+        transition: border-color 0.3s, box-shadow 0.3s;
       }
-      textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 15px rgba(78, 78, 203, 0.5); }
-      label { margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: bold; text-align: right; }
-      .options-container { display: flex; justify-content: flex-end; gap: 1.5rem; margin-bottom: 1.5rem; padding: 0.5rem; }
-      .option { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 1rem; }
-      .option input[type="checkbox"] { cursor: pointer; width: 1.2em; height: 1.2em; }
-      .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(78, 78, 203, 0.5);
+      }
+      label {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        text-align: right;
+      }
+      .options-container {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        padding: 0.5rem;
+      }
+      .option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .option input[type="checkbox"] {
+        cursor: pointer;
+        width: 1.2em;
+        height: 1.2em;
+      }
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
       .btn {
-        padding: 0.8rem 1.5rem; font-family: var(--font-family-kurdish); font-size: 1rem;
-        font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: #fff;
-        transition: background-color 0.3s, transform 0.2s; display: flex;
-        justify-content: center; align-items: center; gap: 8px;
+        padding: 0.8rem 1.5rem;
+        font-family: var(--font-family-kurdish);
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        transition: background-color 0.3s, transform 0.2s;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
       }
-      .btn:hover:not(:disabled) { transform: translateY(-3px); }
-      .btn:active:not(:disabled) { transform: translateY(-1px) scale(0.98); }
-      #convertBtn { background-color: var(--primary-color); flex-grow: 2; }
-      #convertBtn:hover:not(:disabled) { background-color: var(--primary-hover); }
-      #convertBtn:disabled { background-color: #3a3a8a; cursor: wait; }
-      #copyBtn { background-color: var(--secondary-color); }
-      #copyBtn:hover { background-color: #34b38e; }
-      #copyBtn.copied { background-color: #1f6d55; transform: translateY(0); }
-      #clearBtn { background-color: var(--danger-color); }
-      #clearBtn:hover { background-color: #e04a7b; }
-      @keyframes spin { to { transform: rotate(360deg); } }
-      .spinner { width: 18px; height: 18px; border: 3px solid rgba(255, 255, 255, 0.3); border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; }
+      .btn:hover:not(:disabled) {
+        transform: translateY(-3px);
+      }
+      .btn:active:not(:disabled) {
+        transform: translateY(-1px) scale(0.98);
+      }
+      #convertBtn {
+        background-color: var(--primary-color);
+        flex-grow: 2;
+      }
+      #convertBtn:hover:not(:disabled) {
+        background-color: var(--primary-hover);
+      }
+      #convertBtn:disabled {
+        background-color: #3a3a8a;
+        cursor: wait;
+      }
+      #copyBtn {
+        background-color: var(--secondary-color);
+      }
+      #copyBtn:hover {
+        background-color: #34b38e;
+      }
+      #copyBtn.copied {
+        background-color: #1f6d55;
+        transform: translateY(0);
+      }
+      #clearBtn {
+        background-color: var(--danger-color);
+      }
+      #clearBtn:hover {
+        background-color: #e04a7b;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .spinner {
+        width: 18px;
+        height: 18px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-top-color: #fff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
       @media (max-width: 768px) {
-        main { padding: 1.5rem; }
-        .converter-container, .options-container { flex-direction: column; }
-        textarea { min-height: 180px; font-size: 1.1rem; }
-        .actions { flex-direction: column; align-items: stretch; }
+        main {
+          padding: 1.5rem;
+        }
+        .converter-container,
+        .options-container {
+          flex-direction: column;
+        }
+        textarea {
+          min-height: 180px;
+          font-size: 1.1rem;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
       }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <main>
       <header>
         <h1>گهورینا ژمارێ بو نڤیسانێ</h1>
@@ -84,48 +219,98 @@
       <div class="converter-container">
         <div class="text-area-group">
           <label for="userInput">ل ڤێرێ بنڤیسە</label>
-          <textarea id="userInput" placeholder="ل سالا 2024ێ، بهایێ 12.5$ بوو.&#10;نرخێ داشکاندنێ 25% بوو."></textarea>
+          <textarea id="userInput" placeholder=""></textarea>
         </div>
         <div class="text-area-group">
           <label for="finalOutput">ئەنجام</label>
-          <textarea id="finalOutput" readonly placeholder="ئەنجام دێ ل ڤێرێ دیار بیت..."></textarea>
+          <textarea id="finalOutput" readonly placeholder=""></textarea>
         </div>
       </div>
       <div class="options-container">
         <div class="option">
-          <input type="checkbox" id="negative-checkbox">
+          <input type="checkbox" id="negative-checkbox" />
           <label for="negative-checkbox">گهورینا ژمارێن سالب</label>
         </div>
         <div class="option">
-          <input type="checkbox" id="decimal-checkbox">
+          <input type="checkbox" id="decimal-checkbox" />
           <label for="decimal-checkbox">گهورینا ژمارێن پوینت</label>
         </div>
       </div>
       <div class="actions">
-        <button id="convertBtn" class="btn"><span id="btn-text">گهورین</span><div id="btn-icon"></div></button>
+        <button id="convertBtn" class="btn">
+          <span id="btn-text">گهورین</span>
+          <div id="btn-icon"></div>
+        </button>
         <button id="copyBtn" class="btn">کوپیکرنا ئەنجامی</button>
         <button id="clearBtn" class="btn">ژێبرن</button>
       </div>
     </main>
     <script>
       // --- START OF JAVASCRIPT LOGIC ---
-      const _ones = { 0: "سفر", 1: "ئێك", 2: "دوو", 3: "سێ", 4: "چار", 5: "پێنج", 6: "شەش", 7: "حەفت", 8: "هەشت", 9: "نەهـ",};
-      const _teens = { 11: "یازدە", 12: "دوازدە", 13: "سێزدە", 14: "چاردە", 15: "پازدە", 16: "شازدە", 17: "هەڤدە", 18: "هەژدە", 19: "نۆزدە",};
-      const _tens = { 10: "دەهـ", 20: "بیست", 30: "سیهـ", 40: "چل", 50: "پێنجی", 60: "شێست", 70: "حەفتێ", 80: "هەشتێ", 90: "نۆت", };
-      const _scales = { 1: "هزار", 2: "ملیون", 3: "ملیار", 4: "ترلیۆن", };
-      const _hundred = "سەد", _negative = "سالب", _connector = "و", _point = "پوینت";
+      const _ones = {
+        0: "سفر",
+        1: "ئێك",
+        2: "دوو",
+        3: "سێ",
+        4: "چار",
+        5: "پێنج",
+        6: "شەش",
+        7: "حەفت",
+        8: "هەشت",
+        9: "نەهـ",
+      };
+      const _teens = {
+        11: "یازدە",
+        12: "دوازدە",
+        13: "سێزدە",
+        14: "چاردە",
+        15: "پازدە",
+        16: "شازدە",
+        17: "هەڤدە",
+        18: "هەژدە",
+        19: "نۆزدە",
+      };
+      const _tens = {
+        10: "دەهـ",
+        20: "بیست",
+        30: "سیهـ",
+        40: "چل",
+        50: "پێنجی",
+        60: "شێست",
+        70: "حەفتێ",
+        80: "هەشتێ",
+        90: "نۆت",
+      };
+      const _scales = { 1: "هزار", 2: "ملیون", 3: "ملیار", 4: "ترلیۆن" };
+      const _hundred = "سەد",
+        _negative = "سالب",
+        _connector = "و",
+        _point = "پوینت";
 
       function normalizeNumerals(text) {
-        const easternToArabic = { '٠':'0', '١':'1', '٢':'2', '٣':'3', '٤':'4', '٥':'5', '٦':'6', '٧':'7', '٨':'8', '٩':'9' };
+        const easternToArabic = {
+          "٠": "0",
+          "١": "1",
+          "٢": "2",
+          "٣": "3",
+          "٤": "4",
+          "٥": "5",
+          "٦": "6",
+          "٧": "7",
+          "٨": "8",
+          "٩": "9",
+        };
         return text.replace(/[٠-٩]/g, (char) => easternToArabic[char]);
       }
 
       function _convertLessThanThousand(number) {
-        if (number === 0) return ""; let parts = [];
+        if (number === 0) return "";
+        let parts = [];
         if (number >= 100) {
           const hundredsDigit = Math.floor(number / 100);
           if (hundredsDigit > 1) parts.push(_ones[hundredsDigit]);
-          parts.push(_hundred); number %= 100;
+          parts.push(_hundred);
+          number %= 100;
         }
         if (number > 0 && parts.length > 0) parts.push(_connector);
         if (number >= 1 && number <= 9) parts.push(_ones[number]);
@@ -135,97 +320,166 @@
           const tensDigit = Math.floor(number / 10);
           const onesDigit = number % 10;
           parts.push(_tens[tensDigit * 10]);
-          if (onesDigit > 0) { parts.push(_connector); parts.push(_ones[onesDigit]); }
+          if (onesDigit > 0) {
+            parts.push(_connector);
+            parts.push(_ones[onesDigit]);
+          }
         }
         return parts.join(" ");
       }
 
       function convertToKurdishText(number, convertNegatives = false) {
-        if (!Number.isInteger(number)) throw new Error("Input must be an integer.");
+        if (!Number.isInteger(number))
+          throw new Error("Input must be an integer.");
         if (number < 0 && !convertNegatives) return String(number);
         if (number === 0) return _ones[0];
         let prefix = "";
-        if (number < 0 && convertNegatives) { prefix = _negative + " "; number = Math.abs(number); }
-        let chunks = [], resultParts = [];
-        while (number > 0) { chunks.push(number % 1000); number = Math.floor(number / 1000); }
+        if (number < 0 && convertNegatives) {
+          prefix = _negative + " ";
+          number = Math.abs(number);
+        }
+        let chunks = [],
+          resultParts = [];
+        while (number > 0) {
+          chunks.push(number % 1000);
+          number = Math.floor(number / 1000);
+        }
         if (chunks.length === 0) return "";
         for (let i = chunks.length - 1; i >= 0; i--) {
-          const chunk = chunks[i]; if (chunk === 0) continue;
+          const chunk = chunks[i];
+          if (chunk === 0) continue;
           const chunkText = _convertLessThanThousand(chunk);
-          if (i > 0) { const scaleName = _scales[i]; resultParts.push(chunk === 1 ? scaleName : `${chunkText} ${scaleName}`); } 
-          else { resultParts.push(chunkText); }
+          if (i > 0) {
+            const scaleName = _scales[i];
+            resultParts.push(
+              chunk === 1 ? scaleName : `${chunkText} ${scaleName}`
+            );
+          } else {
+            resultParts.push(chunkText);
+          }
         }
         return prefix + resultParts.join(` ${_connector} `);
       }
 
       // New/Modified: Processes a single line of text
       function _convertNumbersInLine(line, convertNegatives, convertDecimals) {
-          if (convertDecimals) {
-              const decimalPattern = /(-?\d+)\.(\d+)\s*([$%])?/g;
-              line = line.replace(decimalPattern, (match, intStr, decStr, symbol) => {
-                  const intText = convertToKurdishText(parseInt(intStr, 10), convertNegatives);
-                  const decText = convertToKurdishText(parseInt(decStr, 10), false);
-                  let result = ` ${intText} ${_point} ${decText} `;
-                  if (symbol === '$') result += "دۆلار "; else if (symbol === '%') result += "ژ سەدێ ";
-                  return result;
-              });
-          }
-          const suffixPattern = new RegExp("(-?\\d+)(\\p{L}+)", "gu");
-          line = line.replace(suffixPattern, (match, numberStr, suffix) => ` ${convertToKurdishText(parseInt(numberStr, 10), convertNegatives)}${suffix} `);
-          const symbolPattern = /(-?\d+)\s*([$%])/g;
-          line = line.replace(symbolPattern, (match, numberStr, symbol) => {
-              const kurdishText = convertToKurdishText(parseInt(numberStr, 10), convertNegatives);
-              if (symbol === '$') return ` ${kurdishText} دۆلار `;
-              if (symbol === '%') return ` ${kurdishText} ژ سەدێ `;
-              return match;
-          });
-          const standalonePattern = /(-?\d+)/g;
-          line = line.replace(standalonePattern, (match, numberStr) => ` ${convertToKurdishText(parseInt(numberStr, 10), convertNegatives)} `);
-          return line.replace(/\s+/g, ' ').trim();
+        if (convertDecimals) {
+          const decimalPattern = /(-?\d+)\.(\d+)\s*([$%])?/g;
+          line = line.replace(
+            decimalPattern,
+            (match, intStr, decStr, symbol) => {
+              const intText = convertToKurdishText(
+                parseInt(intStr, 10),
+                convertNegatives
+              );
+              const decText = convertToKurdishText(parseInt(decStr, 10), false);
+              let result = ` ${intText} ${_point} ${decText} `;
+              if (symbol === "$") result += "دۆلار ";
+              else if (symbol === "%") result += "ژ سەدێ ";
+              return result;
+            }
+          );
+        }
+        const suffixPattern = new RegExp("(-?\\d+)(\\p{L}+)", "gu");
+        line = line.replace(
+          suffixPattern,
+          (match, numberStr, suffix) =>
+            ` ${convertToKurdishText(
+              parseInt(numberStr, 10),
+              convertNegatives
+            )}${suffix} `
+        );
+        const symbolPattern = /(-?\d+)\s*([$%])/g;
+        line = line.replace(symbolPattern, (match, numberStr, symbol) => {
+          const kurdishText = convertToKurdishText(
+            parseInt(numberStr, 10),
+            convertNegatives
+          );
+          if (symbol === "$") return ` ${kurdishText} دۆلار `;
+          if (symbol === "%") return ` ${kurdishText} ژ سەدێ `;
+          return match;
+        });
+        const standalonePattern = /(-?\d+)/g;
+        line = line.replace(
+          standalonePattern,
+          (match, numberStr) =>
+            ` ${convertToKurdishText(
+              parseInt(numberStr, 10),
+              convertNegatives
+            )} `
+        );
+        return line.replace(/\s+/g, " ").trim();
       }
 
       // --- UI Interaction Logic ---
-      const userInput = document.getElementById("userInput"), finalOutput = document.getElementById("finalOutput");
-      const convertBtn = document.getElementById("convertBtn"), btnText = document.getElementById("btn-text"), btnIcon = document.getElementById("btn-icon");
-      const copyBtn = document.getElementById("copyBtn"), clearBtn = document.getElementById("clearBtn");
-      const negativeCheckbox = document.getElementById("negative-checkbox"), decimalCheckbox = document.getElementById("decimal-checkbox");
+      const userInput = document.getElementById("userInput"),
+        finalOutput = document.getElementById("finalOutput");
+      const convertBtn = document.getElementById("convertBtn"),
+        btnText = document.getElementById("btn-text"),
+        btnIcon = document.getElementById("btn-icon");
+      const copyBtn = document.getElementById("copyBtn"),
+        clearBtn = document.getElementById("clearBtn");
+      const negativeCheckbox = document.getElementById("negative-checkbox"),
+        decimalCheckbox = document.getElementById("decimal-checkbox");
 
       function performConversion() {
         const inputText = userInput.value;
         const convertNegatives = negativeCheckbox.checked;
         const convertDecimals = decimalCheckbox.checked;
-        if (inputText.trim() === "") { finalOutput.value = ""; return; }
-        
+        if (inputText.trim() === "") {
+          finalOutput.value = "";
+          return;
+        }
+
         // New/Modified: Process line-by-line
-        const lines = inputText.split('\n');
-        const processedLines = lines.map(line => {
-            const normalizedLine = normalizeNumerals(line);
-            return _convertNumbersInLine(normalizedLine, convertNegatives, convertDecimals);
+        const lines = inputText.split("\n");
+        const processedLines = lines.map((line) => {
+          const normalizedLine = normalizeNumerals(line);
+          return _convertNumbersInLine(
+            normalizedLine,
+            convertNegatives,
+            convertDecimals
+          );
         });
-        finalOutput.value = processedLines.join('\n');
+        finalOutput.value = processedLines.join("\n");
       }
 
       convertBtn.addEventListener("click", () => {
-        convertBtn.disabled = true; btnText.textContent = "گهورین..."; btnIcon.innerHTML = '<div class="spinner"></div>';
+        convertBtn.disabled = true;
+        btnText.textContent = "گهورین...";
+        btnIcon.innerHTML = '<div class="spinner"></div>';
         setTimeout(() => {
           performConversion();
           btnText.textContent = "ئەنجام درا";
-          btnIcon.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>';
-          setTimeout(() => { btnText.textContent = "گهورین"; btnIcon.innerHTML = ''; convertBtn.disabled = false; }, 1500);
+          btnIcon.innerHTML =
+            '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>';
+          setTimeout(() => {
+            btnText.textContent = "گهورین";
+            btnIcon.innerHTML = "";
+            convertBtn.disabled = false;
+          }, 1500);
         }, 500);
       });
 
       copyBtn.addEventListener("click", () => {
         if (finalOutput.value) {
-          navigator.clipboard.writeText(finalOutput.value).then(() => {
-            copyBtn.textContent = "هاتە کوپی کرن"; setTimeout(() => { copyBtn.textContent = "کوپیکرنا ئەنجامی"; }, 2000);
-          }).catch(err => console.error("Failed to copy:", err));
+          navigator.clipboard
+            .writeText(finalOutput.value)
+            .then(() => {
+              copyBtn.textContent = "هاتە کوپی کرن";
+              setTimeout(() => {
+                copyBtn.textContent = "کوپیکرنا ئەنجامی";
+              }, 2000);
+            })
+            .catch((err) => console.error("Failed to copy:", err));
         }
       });
 
       clearBtn.addEventListener("click", () => {
-        userInput.value = ""; finalOutput.value = ""; userInput.focus();
+        userInput.value = "";
+        finalOutput.value = "";
+        userInput.focus();
       });
     </script>
-</body>
+  </body>
 </html>
