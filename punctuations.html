@@ -1,389 +1,163 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ڕێکخەری خاڵبەندی کوردی</title>
-    <!-- Google Fonts for Kurdish Vazirmatn Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-      /* --- START OF EMBEDDED CSS --- */
-
-      /* --- General Styling & Animated Background --- */
-      :root {
-        --bg-color: #1a1a2e;
-        --card-color: rgba(22, 22, 41, 0.7);
-        --primary-color: #4e4ecb;
-        --primary-hover: #6363e1;
-        --secondary-color: #2c9a7a;
-        --secondary-hover: #37c29a;
-        --danger-color: #c73866;
-        --text-color: #e0e0e0;
-        --border-color: rgba(255, 255, 255, 0.2);
-        --font-family-kurdish: "Vazirmatn", sans-serif;
-      }
-
-      @keyframes background-pan {
-        0% {
-          background-position: 0% 50%;
+        :root {
+          --bg-color: #1a1a2e; --card-color: rgba(22, 22, 41, 0.7); --primary-color: #4e4ecb; --primary-hover: #6363e1; --secondary-color: #2c9a7a; --secondary-hover: #37c29a; --danger-color: #c73866; --text-color: #e0e0e0; --border-color: rgba(255, 255, 255, 0.2); --font-family-kurdish: "Vazirmatn", sans-serif;
         }
-        50% {
-          background-position: 100% 50%;
+        @keyframes background-pan { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        body { font-family: var(--font-family-kurdish); background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b); background-size: 400% 400%; animation: background-pan 15s ease infinite; color: var(--text-color); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; box-sizing: border-box; }
+        main { width: 100%; max-width: 900px; background: var(--card-color); border-radius: 20px; padding: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border-color); transition: all 0.3s ease; }
+        header { text-align: center; margin-bottom: 1.5rem; }
+        h1 { color: #fff; margin-bottom: 0.5rem; }
+        .converter-options { border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; margin-bottom: 2rem; text-align: center; border-style: solid; }
+        .converter-options legend { padding: 0 0.5em; font-weight: bold; color: var(--text-color); }
+        .radio-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; }
+        .radio-label input[type="radio"] { display: none; }
+        .radio-label span { display: inline-block; padding: 0.6rem 1.2rem; background-color: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
+        .radio-label input[type="radio"]:checked + span { background-color: var(--primary-color); border-color: var(--primary-hover); color: #fff; box-shadow: 0 0 10px rgba(78, 78, 203, 0.4); }
+        .radio-label:hover span { background-color: rgba(0, 0, 0, 0.5); border-color: var(--primary-color); }
+        .converter-container { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .text-area-group { flex: 1; display: flex; flex-direction: column; }
+        textarea { flex-grow: 1; background: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-color); border-radius: 10px; padding: 1rem; color: var(--text-color); font-family: var(--font-family-kurdish); font-size: 1.2rem; min-height: 300px; resize: vertical; transition: border-color 0.3s, box-shadow 0.3s; }
+        textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 15px rgba(78, 78, 203, 0.5); }
+        #output-text { background: rgba(0, 0, 0, 0.2); }
+        label { margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: bold; }
+        .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+        .btn { padding: 0.8rem 1.8rem; font-family: var(--font-family-kurdish); font-size: 1rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: #fff; transition: background-color 0.3s, transform 0.2s; }
+        .btn:hover { transform: translateY(-3px); }
+        #normalize-btn { background-color: var(--secondary-color); }
+        #normalize-btn:hover { background-color: var(--secondary-hover); }
+        #copy-btn { background-color: var(--primary-color); }
+        #copy-btn:hover { background-color: var(--primary-hover); }
+        #copy-btn.copied { background-color: var(--secondary-color); }
+        #clear-btn { background-color: var(--danger-color); }
+        #clear-btn:hover { background-color: #e04a7b; }
+        @media (max-width: 768px) {
+          main { padding: 1.5rem; }
+          .converter-container { flex-direction: column; }
+          textarea { min-height: 250px; font-size: 1.1rem; }
+          .actions { flex-direction: column; align-items: stretch; }
         }
-        100% {
-          background-position: 0% 50%;
-        }
-      }
-
-      body {
-        font-family: var(--font-family-kurdish);
-        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b);
-        background-size: 400% 400%;
-        animation: background-pan 15s ease infinite;
-        color: var(--text-color);
-        margin: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-        padding: 1rem;
-        box-sizing: border-box;
-      }
-
-      /* --- Main Converter Card --- */
-      main {
-        width: 100%;
-        max-width: 900px;
-        background: var(--card-color);
-        border-radius: 20px;
-        padding: 2rem;
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
-      }
-
-      header {
-        text-align: center;
-        margin-bottom: 1.5rem;
-      }
-
-      h1 {
-        color: #fff;
-        margin-bottom: 0.5rem;
-      }
-
-      /* --- Converter Type Selection --- */
-      .converter-options {
-        border: 1px solid var(--border-color);
-        border-radius: 10px;
-        padding: 1rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        border-style: solid; /* Added to make fieldset border visible */
-      }
-
-      .converter-options legend {
-        padding: 0 0.5em;
-        font-weight: bold;
-        color: var(--text-color);
-      }
-
-      .radio-group {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .radio-label input[type="radio"] {
-        display: none; /* Hide the default radio button */
-      }
-
-      .radio-label span {
-        display: inline-block;
-        padding: 0.6rem 1.2rem;
-        background-color: rgba(0, 0, 0, 0.3);
-        border: 2px solid var(--border-color);
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: bold;
-      }
-
-      .radio-label input[type="radio"]:checked + span {
-        background-color: var(--primary-color);
-        border-color: var(--primary-hover);
-        color: #fff;
-        box-shadow: 0 0 10px rgba(78, 78, 203, 0.4);
-      }
-
-      .radio-label:hover span {
-        background-color: rgba(0, 0, 0, 0.5);
-        border-color: var(--primary-color);
-      }
-
-      /* --- Text Area Container --- */
-      .converter-container {
-        display: flex;
-        gap: 1.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .text-area-group {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-      }
-
-      textarea {
-        flex-grow: 1;
-        background: rgba(0, 0, 0, 0.3);
-        border: 2px solid var(--border-color);
-        border-radius: 10px;
-        padding: 1rem;
-        color: var(--text-color);
-        font-family: var(--font-family-kurdish);
-        font-size: 1.2rem;
-        min-height: 300px;
-        resize: vertical;
-        transition: border-color 0.3s, box-shadow 0.3s;
-      }
-
-      textarea:focus {
-        outline: none;
-        border-color: var(--primary-color);
-        box-shadow: 0 0 15px rgba(78, 78, 203, 0.5);
-      }
-
-      #output-text {
-        background: rgba(0, 0, 0, 0.2);
-      }
-
-      label {
-        margin-bottom: 0.5rem;
-        font-size: 1.1rem;
-        font-weight: bold;
-      }
-
-      /* --- Action Buttons --- */
-      .actions {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-      }
-
-      .btn {
-        padding: 0.8rem 1.8rem;
-        font-family: var(--font-family-kurdish);
-        font-size: 1rem;
-        font-weight: bold;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        color: #fff;
-        transition: background-color 0.3s, transform 0.2s;
-      }
-
-      .btn:hover {
-        transform: translateY(-3px);
-      }
-
-      #normalize-btn {
-        background-color: var(--secondary-color);
-      }
-      #normalize-btn:hover {
-        background-color: var(--secondary-hover);
-      }
-
-      #copy-btn {
-        background-color: var(--primary-color);
-      }
-      #copy-btn:hover {
-        background-color: var(--primary-hover);
-      }
-      #copy-btn.copied {
-        background-color: var(--secondary-color);
-      }
-
-      #clear-btn {
-        background-color: var(--danger-color);
-      }
-      #clear-btn:hover {
-        background-color: #e04a7b;
-      }
-
-      /* --- Responsive Design for Mobile --- */
-      @media (max-width: 768px) {
-        main {
-          padding: 1.5rem;
-        }
-        .converter-container {
-          flex-direction: column;
-        }
-        textarea {
-          min-height: 250px;
-          font-size: 1.1rem;
-        }
-        .actions {
-          flex-direction: column;
-          align-items: stretch; /* Makes buttons full-width */
-        }
-      }
-      /* --- END OF EMBEDDED CSS --- */
     </style>
-  </head>
-  <body>
+</head>
+<body>
+
     <main>
-      <header>
-        <h1>ڕێکخەرێ خاڵبەندی کوردی</h1>
-      </header>
-
-      <fieldset class="converter-options">
-        <legend>شێوازی ڕێکخستنێ</legend>
-        <div class="radio-group">
-          <label class="radio-label">
-            <input type="radio" name="mode" value="join" checked />
-            <span>پێکڤە کرنا خاڵبەندان</span>
-          </label>
-          <label class="radio-label">
-            <input type="radio" name="mode" value="separate" />
-            <span>جوداکرنا خاڵبەندان </span>
-          </label>
+        <header><h1>ڕێکخەری خاڵبەندی کوردی</h1></header>
+        <fieldset class="converter-options">
+            <legend>شێوازی ڕێکخستن</legend>
+            <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="mode" value="join" checked><span>لێکدانی خاڵبەندی (ستاندارد)</span></label>
+                <label class="radio-label"><input type="radio" name="mode" value="separate"><span>جیاکردنەوەی خاڵبەندی</span></label>
+            </div>
+        </fieldset>
+        <div class="converter-container">
+            <div class="text-area-group"><label for="input-text">دەقی سەرەکی</label><textarea id="input-text" placeholder="دەقی خۆت لێرە بنووسە..."></textarea></div>
+            <div class="text-area-group"><label for="output-text">ئەنجام</label><textarea id="output-text" readonly></textarea></div>
         </div>
-      </fieldset>
-
-      <div class="converter-container">
-        <div class="text-area-group">
-          <label for="input-text">دەقێ سەرەکی</label>
-          <textarea
-            id="input-text"
-            placeholder="دەقێ خول ل ڤێرێ بنڤیسە"
-          ></textarea>
+        <div class="actions">
+            <button id="normalize-btn" class="btn">ڕێکخستن</button>
+            <button id="copy-btn" class="btn">کۆپیکردن</button>
+            <button id="clear-btn" class="btn">سڕینەوە</button>
         </div>
-        <div class="text-area-group">
-          <label for="output-text">ئەنجام</label>
-          <textarea id="output-text" readonly></textarea>
-        </div>
-      </div>
-
-      <div class="actions">
-        <button id="normalize-btn" class="btn">رێك بێخە</button>
-        <button id="copy-btn" class="btn">کوپی بکە</button>
-        <button id="clear-btn" class="btn">ژێبرن</button>
-      </div>
     </main>
 
     <script>
-      /**
-       * Normalizes punctuation in a Kurdish (Badini) string.
-       * @param {string} text The input string to normalize.
-       * @param {boolean} [joinPunctuation=false] - Controls the normalization mode.
-       * @returns {string} The normalized string.
-       */
-      function normalizeKurdishPunctuation(text, joinPunctuation = false) {
-        const openingPunct = "«“\\(\\[\\{";
-        const closingPunct = "»”\\)\\]\\}،؛؟.,!";
-        const allPunctForCharClass = "«“()\\[\\]{}»”،؛؟.,!";
+        /**
+         * (Core function) Normalizes punctuation on a SINGLE LINE of text.
+         */
+        function normalizeKurdishPunctuation(line, joinPunctuation = false) {
+            if (!line.trim()) return ""; // Keep blank lines as they are
 
-        if (!joinPunctuation) {
-          let processedText = text.replace(/\(\(/g, "«").replace(/\)\)/g, "»");
-          processedText = processedText.replace(
-            new RegExp(`\\s+([${closingPunct}])`, "g"),
-            "$1"
-          );
-          processedText = processedText.replace(
-            new RegExp(`([${openingPunct}])\\s+`, "g"),
-            "$1"
-          );
-          const reCloseOpen = new RegExp(
-            `([${closingPunct}])([${openingPunct}])`,
-            "g"
-          );
-          processedText = processedText.replace(reCloseOpen, "$1 $2");
-          const reAddSpaceAfter = new RegExp(
-            `([${closingPunct}])([^\\s${allPunctForCharClass}])`,
-            "g"
-          );
-          processedText = processedText.replace(reAddSpaceAfter, "$1 $2");
-          const reAddSpaceBefore = new RegExp(
-            `([^\\s${allPunctForCharClass}])([${openingPunct}])`,
-            "g"
-          );
-          processedText = processedText.replace(reAddSpaceBefore, "$1 $2");
-          return processedText.replace(/\s+/g, " ").trim();
-        } else {
-          const cleanedText = normalizeKurdishPunctuation(text, false);
-          const allPunct = openingPunct + closingPunct;
-          const reSeparate = new RegExp(`([${allPunct}])`, "g");
-          let separatedText = cleanedText.replace(reSeparate, " $1 ");
-          return separatedText.replace(/\s+/g, " ").trim();
+            const openingPunct = "«“\\(\\[\\{";
+            const closingPunct = "»”\\)\\]\\}،؛؟.,!";
+            const allPunctForCharClass = "«“()\\[\\]{}»”،؛؟.,!";
+
+            if (!joinPunctuation) {
+                let processedText = line.replace(/\(\(/g, '«').replace(/\)\)/g, '»');
+                processedText = processedText.replace(new RegExp(`\\s+([${closingPunct}])`, 'g'), '$1');
+                processedText = processedText.replace(new RegExp(`([${openingPunct}])\\s+`, 'g'), '$1');
+                processedText = processedText.replace(new RegExp(`([${closingPunct}])([${openingPunct}])`, 'g'), '$1 $2');
+                processedText = processedText.replace(new RegExp(`([${closingPunct}])([^\\s${allPunctForCharClass}])`, 'g'), '$1 $2');
+                processedText = processedText.replace(new RegExp(`([^\\s${allPunctForCharClass}])([${openingPunct}])`, 'g'), '$1 $2');
+                return processedText.replace(/\s+/g, ' ').trim();
+            } else {
+                const cleanedText = normalizeKurdishPunctuation(line, false);
+                const allPunct = openingPunct + closingPunct;
+                const reSeparate = new RegExp(`([${allPunct}])`, 'g');
+                let separatedText = cleanedText.replace(reSeparate, ' $1 ');
+                return separatedText.replace(/\s+/g, ' ').trim();
+            }
         }
-      }
 
-      // --- DOM Event Handling ---
-      const inputText = document.getElementById("input-text");
-      const outputText = document.getElementById("output-text");
-      const normalizeBtn = document.getElementById("normalize-btn");
-      const copyBtn = document.getElementById("copy-btn");
-      const clearBtn = document.getElementById("clear-btn");
+        // --- DOM Event Handling ---
+        const inputText = document.getElementById('input-text');
+        const outputText = document.getElementById('output-text');
+        const normalizeBtn = document.getElementById('normalize-btn');
+        const copyBtn = document.getElementById('copy-btn');
+        const clearBtn = document.getElementById('clear-btn');
 
-      // Function to handle the main normalization
-      function handleNormalization() {
-        const originalText = inputText.value;
-        const selectedMode = document.querySelector(
-          'input[name="mode"]:checked'
-        ).value;
-        const shouldSeparate = selectedMode === "separate";
+        /**
+         * Handles the main normalization process, preserving line breaks.
+         */
+        function handleNormalization() {
+            const originalText = inputText.value;
+            if (!originalText.trim()) {
+                outputText.value = "";
+                return;
+            }
+            
+            const selectedMode = document.querySelector('input[name="mode"]:checked').value;
+            const shouldSeparate = (selectedMode === 'separate');
+            
+            // 1. Normalize line endings and collapse excessive blank lines
+            let processedText = originalText.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n');
+            
+            // 2. Trim leading/trailing whitespace (including newlines) from the entire block
+            processedText = processedText.trim();
 
-        const normalizedText = normalizeKurdishPunctuation(
-          originalText,
-          shouldSeparate
-        );
-        outputText.value = normalizedText;
-      }
+            // 3. Split the text into an array of lines
+            const lines = processedText.split('\n');
 
-      // Function to handle copying text to clipboard
-      function handleCopy() {
-        if (!outputText.value) return; // Don't copy if output is empty
+            // 4. Process each line individually
+            const processedLines = lines.map(line => 
+                normalizeKurdishPunctuation(line, shouldSeparate)
+            );
 
-        navigator.clipboard
-          .writeText(outputText.value)
-          .then(() => {
-            // Visual feedback on success
-            copyBtn.textContent = "هاتە کوپی کرن";
-            copyBtn.classList.add("copied");
+            // 5. Join the processed lines back together and set the output
+            outputText.value = processedLines.join('\n');
+        }
+        
+        function handleCopy() {
+            if (!outputText.value) return;
+            navigator.clipboard.writeText(outputText.value).then(() => {
+                copyBtn.textContent = 'کۆپی کرا!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.textContent = 'کۆپیکردن';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => { console.error('Failed to copy text: ', err); });
+        }
+        
+        function handleClear() {
+            inputText.value = '';
+            outputText.value = '';
+            inputText.focus();
+        }
+        
+        normalizeBtn.addEventListener('click', handleNormalization);
+        copyBtn.addEventListener('click', handleCopy);
+        clearBtn.addEventListener('click', handleClear);
 
-            // Revert back after 2 seconds
-            setTimeout(() => {
-              copyBtn.textContent = "کوپی بکە";
-              copyBtn.classList.remove("copied");
-            }, 2000);
-          })
-          .catch((err) => {
-            console.error("Failed to copy text: ", err);
-          });
-      }
-
-      // Function to clear both text areas
-      function handleClear() {
-        inputText.value = "";
-        outputText.value = "";
-        inputText.focus(); // Set focus back to the input area
-      }
-
-      // --- Attach Event Listeners ---
-      normalizeBtn.addEventListener("click", handleNormalization);
-      copyBtn.addEventListener("click", handleCopy);
-      clearBtn.addEventListener("click", handleClear);
     </script>
-  </body>
+</body>
 </html>
