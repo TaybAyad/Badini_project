@@ -1,171 +1,372 @@
 <!DOCTYPE html>
 <html lang="ku" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ڕێکخەری خاڵبەندی کوردی</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-          --bg-color: #1a1a2e; --card-color: rgba(22, 22, 41, 0.7); --primary-color: #4e4ecb; --primary-hover: #6363e1; --secondary-color: #2c9a7a; --secondary-hover: #37c29a; --danger-color: #c73866; --text-color: #e0e0e0; --border-color: rgba(255, 255, 255, 0.2); --font-family-kurdish: "Vazirmatn", sans-serif;
-        }
-        @keyframes background-pan { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        body { font-family: var(--font-family-kurdish); background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b); background-size: 400% 400%; animation: background-pan 15s ease infinite; color: var(--text-color); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1rem; box-sizing: border-box; }
-        main { width: 100%; max-width: 900px; background: var(--card-color); border-radius: 20px; padding: 2rem; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--border-color); transition: all 0.3s ease; }
-        header { text-align: center; margin-bottom: 1.5rem; }
-        h1 { color: #fff; margin-bottom: 0.5rem; }
-        .converter-options { border: 1px solid var(--border-color); border-radius: 10px; padding: 1rem; margin-bottom: 2rem; text-align: center; border-style: solid; }
-        .converter-options legend { padding: 0 0.5em; font-weight: bold; color: var(--text-color); }
-        .radio-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem; }
-        .radio-label input[type="radio"] { display: none; }
-        .radio-label span { display: inline-block; padding: 0.6rem 1.2rem; background-color: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-color); border-radius: 8px; cursor: pointer; transition: all 0.3s ease; font-weight: bold; }
-        .radio-label input[type="radio"]:checked + span { background-color: var(--primary-color); border-color: var(--primary-hover); color: #fff; box-shadow: 0 0 10px rgba(78, 78, 203, 0.4); }
-        .radio-label:hover span { background-color: rgba(0, 0, 0, 0.5); border-color: var(--primary-color); }
-        .converter-container { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; }
-        .text-area-group { flex: 1; display: flex; flex-direction: column; }
-        textarea { flex-grow: 1; background: rgba(0, 0, 0, 0.3); border: 2px solid var(--border-color); border-radius: 10px; padding: 1rem; color: var(--text-color); font-family: var(--font-family-kurdish); font-size: 1.2rem; min-height: 300px; resize: vertical; transition: border-color 0.3s, box-shadow 0.3s; }
-        textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 15px rgba(78, 78, 203, 0.5); }
-        #output-text { background: rgba(0, 0, 0, 0.2); }
-        label { margin-bottom: 0.5rem; font-size: 1.1rem; font-weight: bold; }
-        .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-        .btn { padding: 0.8rem 1.8rem; font-family: var(--font-family-kurdish); font-size: 1rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: #fff; transition: background-color 0.3s, transform 0.2s; }
-        .btn:hover { transform: translateY(-3px); }
-        #copy-btn { background-color: var(--primary-color); }
-        #copy-btn:hover { background-color: var(--primary-hover); }
-        #copy-btn.copied { background-color: var(--secondary-color); }
-        #clear-btn { background-color: var(--danger-color); }
-        #clear-btn:hover { background-color: #e04a7b; }
-        @media (max-width: 768px) {
-          main { padding: 1.5rem; }
-          .converter-container { flex-direction: column; }
-          textarea { min-height: 250px; font-size: 1.1rem; }
-          .actions { flex-direction: column; align-items: stretch; }
-        }
-    </style>
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
+    <style>
+      :root {
+        --bg-color: #1a1a2e;
+        --card-color: rgba(22, 22, 41, 0.7);
+        --primary-color: #4e4ecb;
+        --primary-hover: #6363e1;
+        --secondary-color: #2c9a7a;
+        --secondary-hover: #37c29a;
+        --danger-color: #c73866;
+        --text-color: #e0e0e0;
+        --border-color: rgba(255, 255, 255, 0.2);
+        --font-family-kurdish: "Vazirmatn", sans-serif;
+      }
+      @keyframes background-pan {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+      body {
+        font-family: var(--font-family-kurdish);
+        background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #2c4a6b);
+        background-size: 400% 400%;
+        animation: background-pan 15s ease infinite;
+        color: var(--text-color);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 1rem;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100%;
+        max-width: 900px;
+        background: var(--card-color);
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid var(--border-color);
+        transition: all 0.3s ease;
+      }
+      header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+      }
+      h1 {
+        color: #fff;
+        margin-bottom: 0.5rem;
+      }
+      .converter-options {
+        border: 1px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        border-style: solid;
+      }
+      .converter-options legend {
+        padding: 0 0.5em;
+        font-weight: bold;
+        color: var(--text-color);
+      }
+      .radio-group {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .radio-label input[type="radio"] {
+        display: none;
+      }
+      .radio-label span {
+        display: inline-block;
+        padding: 0.6rem 1.2rem;
+        background-color: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+      }
+      .radio-label input[type="radio"]:checked + span {
+        background-color: var(--primary-color);
+        border-color: var(--primary-hover);
+        color: #fff;
+        box-shadow: 0 0 10px rgba(78, 78, 203, 0.4);
+      }
+      .radio-label:hover span {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-color: var(--primary-color);
+      }
+      .converter-container {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+      .text-area-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      textarea {
+        flex-grow: 1;
+        background: rgba(0, 0, 0, 0.3);
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 1rem;
+        color: var(--text-color);
+        font-family: var(--font-family-kurdish);
+        font-size: 1.2rem;
+        min-height: 300px;
+        resize: vertical;
+        transition: border-color 0.3s, box-shadow 0.3s;
+      }
+      textarea:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 15px rgba(78, 78, 203, 0.5);
+      }
+      #output-text {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      label {
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+      }
+      .actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 0.8rem 1.8rem;
+        font-family: var(--font-family-kurdish);
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        color: #fff;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+      .btn:hover {
+        transform: translateY(-3px);
+      }
+      #copy-btn {
+        background-color: var(--primary-color);
+      }
+      #copy-btn:hover {
+        background-color: var(--primary-hover);
+      }
+      #copy-btn.copied {
+        background-color: var(--secondary-color);
+      }
+      #clear-btn {
+        background-color: var(--danger-color);
+      }
+      #clear-btn:hover {
+        background-color: #e04a7b;
+      }
+      @media (max-width: 768px) {
+        main {
+          padding: 1.5rem;
+        }
+        .converter-container {
+          flex-direction: column;
+        }
+        textarea {
+          min-height: 250px;
+          font-size: 1.1rem;
+        }
+        .actions {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
     <main>
-        <header><h1>ڕێکخەری خاڵبەندی کوردی</h1></header>
-        <fieldset class="converter-options">
-            <legend>شێوازی ڕێکخستن</legend>
-            <div class="radio-group">
-                <label class="radio-label"><input type="radio" name="mode" value="join" checked><span>لێکدانی خاڵبەندی (ستاندارد)</span></label>
-                <label class="radio-label"><input type="radio" name="mode" value="separate"><span>جیاکردنەوەی خاڵبەندی</span></label>
-            </div>
-        </fieldset>
-        <div class="converter-container">
-            <div class="text-area-group"><label for="input-text">دەقی سەرەکی</label><textarea id="input-text" placeholder="دەقی خۆت لێرە بنووسە..."></textarea></div>
-            <div class="text-area-group"><label for="output-text">ئەنجام</label><textarea id="output-text" readonly></textarea></div>
+      <header><h1>ڕێک و پێك کرنا خاڵبەندان</h1></header>
+      <fieldset class="converter-options">
+        <legend>شێوازێ ڕێکخستنێ</legend>
+        <div class="radio-group">
+          <label class="radio-label"
+            ><input type="radio" name="mode" value="join" checked /><span
+              >پێکەڤەکرنا خاڵبەندان</span
+            ></label
+          >
+          <label class="radio-label"
+            ><input type="radio" name="mode" value="separate" /><span
+              >جودا کرنا خاڵبەندان</span
+            ></label
+          >
         </div>
-        <div class="actions">
-            <!-- The "Normalize" button has been removed -->
-            <button id="copy-btn" class="btn">کۆپیکردن</button>
-            <button id="clear-btn" class="btn">سڕینەوە</button>
+      </fieldset>
+      <div class="converter-container">
+        <div class="text-area-group">
+          <label for="input-text">دەقێ سەرەکی</label
+          ><textarea
+            id="input-text"
+            placeholder="دەقی خۆت لێرە بنووسە..."
+          ></textarea>
         </div>
+        <div class="text-area-group">
+          <label for="output-text">ئەنجام</label
+          ><textarea id="output-text" readonly></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <!-- The "Normalize" button has been removed -->
+        <button id="copy-btn" class="btn">کوپی بکە</button>
+        <button id="clear-btn" class="btn">ژێبرن</button>
+      </div>
     </main>
 
     <script>
-        /**
-         * (Core function) Normalizes punctuation on a SINGLE LINE of text.
-         */
-        function normalizeKurdishPunctuation(line, joinPunctuation = false) {
-            if (!line.trim()) return "";
-            const openingPunct = "«“\\(\\[\\{";
-            const closingPunct = "»”\\)\\]\\}،؛؟.,!";
-            const allPunctForCharClass = "«“()\\[\\]{}»”،؛؟.,!";
-            if (!joinPunctuation) {
-                let processedText = line.replace(/\(\(/g, '«').replace(/\)\)/g, '»');
-                processedText = processedText.replace(new RegExp(`\\s+([${closingPunct}])`, 'g'), '$1');
-                processedText = processedText.replace(new RegExp(`([${openingPunct}])\\s+`, 'g'), '$1');
-                processedText = processedText.replace(new RegExp(`([${closingPunct}])([${openingPunct}])`, 'g'), '$1 $2');
-                processedText = processedText.replace(new RegExp(`([${closingPunct}])([^\\s${allPunctForCharClass}])`, 'g'), '$1 $2');
-                processedText = processedText.replace(new RegExp(`([^\\s${allPunctForCharClass}])([${openingPunct}])`, 'g'), '$1 $2');
-                return processedText.replace(/\s+/g, ' ').trim();
-            } else {
-                const cleanedText = normalizeKurdishPunctuation(line, false);
-                const allPunct = openingPunct + closingPunct;
-                const reSeparate = new RegExp(`([${allPunct}])`, 'g');
-                let separatedText = cleanedText.replace(reSeparate, ' $1 ');
-                return separatedText.replace(/\s+/g, ' ').trim();
-            }
+      /**
+       * (Core function) Normalizes punctuation on a SINGLE LINE of text.
+       */
+      function normalizeKurdishPunctuation(line, joinPunctuation = false) {
+        if (!line.trim()) return "";
+        const openingPunct = "«“\\(\\[\\{";
+        const closingPunct = "»”\\)\\]\\}،؛؟.,!";
+        const allPunctForCharClass = "«“()\\[\\]{}»”،؛؟.,!";
+        if (!joinPunctuation) {
+          let processedText = line.replace(/\(\(/g, "«").replace(/\)\)/g, "»");
+          processedText = processedText.replace(
+            new RegExp(`\\s+([${closingPunct}])`, "g"),
+            "$1"
+          );
+          processedText = processedText.replace(
+            new RegExp(`([${openingPunct}])\\s+`, "g"),
+            "$1"
+          );
+          processedText = processedText.replace(
+            new RegExp(`([${closingPunct}])([${openingPunct}])`, "g"),
+            "$1 $2"
+          );
+          processedText = processedText.replace(
+            new RegExp(
+              `([${closingPunct}])([^\\s${allPunctForCharClass}])`,
+              "g"
+            ),
+            "$1 $2"
+          );
+          processedText = processedText.replace(
+            new RegExp(
+              `([^\\s${allPunctForCharClass}])([${openingPunct}])`,
+              "g"
+            ),
+            "$1 $2"
+          );
+          return processedText.replace(/\s+/g, " ").trim();
+        } else {
+          const cleanedText = normalizeKurdishPunctuation(line, false);
+          const allPunct = openingPunct + closingPunct;
+          const reSeparate = new RegExp(`([${allPunct}])`, "g");
+          let separatedText = cleanedText.replace(reSeparate, " $1 ");
+          return separatedText.replace(/\s+/g, " ").trim();
         }
+      }
 
-        // --- Utility Function for Performance ---
-        /**
-         * Creates a debounced function that delays invoking `func` until after `wait`
-         * milliseconds have elapsed since the last time the debounced function was invoked.
-         */
-        function debounce(func, wait) {
-            let timeout;
-            return function(...args) {
-                const context = this;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), wait);
-            };
+      // --- Utility Function for Performance ---
+      /**
+       * Creates a debounced function that delays invoking `func` until after `wait`
+       * milliseconds have elapsed since the last time the debounced function was invoked.
+       */
+      function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+          const context = this;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+      }
+
+      // --- DOM Element References ---
+      const inputText = document.getElementById("input-text");
+      const outputText = document.getElementById("output-text");
+      const modeRadios = document.querySelectorAll('input[name="mode"]');
+      const copyBtn = document.getElementById("copy-btn");
+      const clearBtn = document.getElementById("clear-btn");
+
+      /**
+       * The main normalization handler function.
+       */
+      function handleNormalization() {
+        const originalText = inputText.value;
+        if (!originalText.trim()) {
+          outputText.value = "";
+          return;
         }
+        const selectedMode = document.querySelector(
+          'input[name="mode"]:checked'
+        ).value;
+        const shouldSeparate = selectedMode === "separate";
+        let processedText = originalText
+          .replace(/\r\n/g, "\n")
+          .replace(/\n{3,}/g, "\n\n");
+        processedText = processedText.trim();
+        const lines = processedText.split("\n");
+        const processedLines = lines.map((line) =>
+          normalizeKurdishPunctuation(line, shouldSeparate)
+        );
+        outputText.value = processedLines.join("\n");
+      }
 
-        // --- DOM Element References ---
-        const inputText = document.getElementById('input-text');
-        const outputText = document.getElementById('output-text');
-        const modeRadios = document.querySelectorAll('input[name="mode"]');
-        const copyBtn = document.getElementById('copy-btn');
-        const clearBtn = document.getElementById('clear-btn');
+      // Create a debounced version of the handler for the input event
+      const debouncedHandleNormalization = debounce(handleNormalization, 250);
 
-        /**
-         * The main normalization handler function.
-         */
-        function handleNormalization() {
-            const originalText = inputText.value;
-            if (!originalText.trim()) {
-                outputText.value = "";
-                return;
-            }
-            const selectedMode = document.querySelector('input[name="mode"]:checked').value;
-            const shouldSeparate = (selectedMode === 'separate');
-            let processedText = originalText.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n');
-            processedText = processedText.trim();
-            const lines = processedText.split('\n');
-            const processedLines = lines.map(line => normalizeKurdishPunctuation(line, shouldSeparate));
-            outputText.value = processedLines.join('\n');
-        }
-        
-        // Create a debounced version of the handler for the input event
-        const debouncedHandleNormalization = debounce(handleNormalization, 250);
+      function handleCopy() {
+        if (!outputText.value) return;
+        navigator.clipboard
+          .writeText(outputText.value)
+          .then(() => {
+            copyBtn.textContent = "هاتە کوپی کرن";
+            copyBtn.classList.add("copied");
+            setTimeout(() => {
+              copyBtn.textContent = "کوپی بکە";
+              copyBtn.classList.remove("copied");
+            }, 2000);
+          })
+          .catch((err) => {
+            console.error("Failed to copy text: ", err);
+          });
+      }
 
-        function handleCopy() {
-            if (!outputText.value) return;
-            navigator.clipboard.writeText(outputText.value).then(() => {
-                copyBtn.textContent = 'کۆپی کرا!';
-                copyBtn.classList.add('copied');
-                setTimeout(() => {
-                    copyBtn.textContent = 'کۆپیکردن';
-                    copyBtn.classList.remove('copied');
-                }, 2000);
-            }).catch(err => { console.error('Failed to copy text: ', err); });
-        }
-        
-        function handleClear() {
-            inputText.value = '';
-            outputText.value = '';
-            inputText.focus();
-        }
-        
-        // --- Attach Event Listeners ---
-        // Automatically normalize when user types (with debounce for performance)
-        inputText.addEventListener('input', debouncedHandleNormalization);
-        
-        // Also normalize instantly when the user changes the mode
-        modeRadios.forEach(radio => {
-            radio.addEventListener('change', handleNormalization);
-        });
+      function handleClear() {
+        inputText.value = "";
+        outputText.value = "";
+        inputText.focus();
+      }
 
-        copyBtn.addEventListener('click', handleCopy);
-        clearBtn.addEventListener('click', handleClear);
+      // --- Attach Event Listeners ---
+      // Automatically normalize when user types (with debounce for performance)
+      inputText.addEventListener("input", debouncedHandleNormalization);
 
+      // Also normalize instantly when the user changes the mode
+      modeRadios.forEach((radio) => {
+        radio.addEventListener("change", handleNormalization);
+      });
+
+      copyBtn.addEventListener("click", handleCopy);
+      clearBtn.addEventListener("click", handleClear);
     </script>
-</body>
+  </body>
 </html>
