@@ -33,8 +33,6 @@
         .actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
         .btn { padding: 0.8rem 1.8rem; font-family: var(--font-family-kurdish); font-size: 1rem; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; color: #fff; transition: background-color 0.3s, transform 0.2s; }
         .btn:hover { transform: translateY(-3px); }
-        #normalize-btn { background-color: var(--secondary-color); }
-        #normalize-btn:hover { background-color: var(--secondary-hover); }
         #copy-btn { background-color: var(--primary-color); }
         #copy-btn:hover { background-color: var(--primary-hover); }
         #copy-btn.copied { background-color: var(--secondary-color); }
@@ -64,7 +62,7 @@
             <div class="text-area-group"><label for="output-text">ئەنجام</label><textarea id="output-text" readonly></textarea></div>
         </div>
         <div class="actions">
-            <button id="normalize-btn" class="btn">ڕێکخستن</button>
+            <!-- The "Normalize" button has been removed -->
             <button id="copy-btn" class="btn">کۆپیکردن</button>
             <button id="clear-btn" class="btn">سڕینەوە</button>
         </div>
@@ -75,12 +73,10 @@
          * (Core function) Normalizes punctuation on a SINGLE LINE of text.
          */
         function normalizeKurdishPunctuation(line, joinPunctuation = false) {
-            if (!line.trim()) return ""; // Keep blank lines as they are
-
+            if (!line.trim()) return "";
             const openingPunct = "«“\\(\\[\\{";
             const closingPunct = "»”\\)\\]\\}،؛؟.,!";
             const allPunctForCharClass = "«“()\\[\\]{}»”،؛؟.,!";
-
             if (!joinPunctuation) {
                 let processedText = line.replace(/\(\(/g, '«').replace(/\)\)/g, '»');
                 processedText = processedText.replace(new RegExp(`\\s+([${closingPunct}])`, 'g'), '$1');
@@ -98,15 +94,29 @@
             }
         }
 
-        // --- DOM Event Handling ---
+        // --- Utility Function for Performance ---
+        /**
+         * Creates a debounced function that delays invoking `func` until after `wait`
+         * milliseconds have elapsed since the last time the debounced function was invoked.
+         */
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                const context = this;
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(context, args), wait);
+            };
+        }
+
+        // --- DOM Element References ---
         const inputText = document.getElementById('input-text');
         const outputText = document.getElementById('output-text');
-        const normalizeBtn = document.getElementById('normalize-btn');
+        const modeRadios = document.querySelectorAll('input[name="mode"]');
         const copyBtn = document.getElementById('copy-btn');
         const clearBtn = document.getElementById('clear-btn');
 
         /**
-         * Handles the main normalization process, preserving line breaks.
+         * The main normalization handler function.
          */
         function handleNormalization() {
             const originalText = inputText.value;
@@ -114,28 +124,18 @@
                 outputText.value = "";
                 return;
             }
-            
             const selectedMode = document.querySelector('input[name="mode"]:checked').value;
             const shouldSeparate = (selectedMode === 'separate');
-            
-            // 1. Normalize line endings and collapse excessive blank lines
             let processedText = originalText.replace(/\r\n/g, '\n').replace(/\n{3,}/g, '\n\n');
-            
-            // 2. Trim leading/trailing whitespace (including newlines) from the entire block
             processedText = processedText.trim();
-
-            // 3. Split the text into an array of lines
             const lines = processedText.split('\n');
-
-            // 4. Process each line individually
-            const processedLines = lines.map(line => 
-                normalizeKurdishPunctuation(line, shouldSeparate)
-            );
-
-            // 5. Join the processed lines back together and set the output
+            const processedLines = lines.map(line => normalizeKurdishPunctuation(line, shouldSeparate));
             outputText.value = processedLines.join('\n');
         }
         
+        // Create a debounced version of the handler for the input event
+        const debouncedHandleNormalization = debounce(handleNormalization, 250);
+
         function handleCopy() {
             if (!outputText.value) return;
             navigator.clipboard.writeText(outputText.value).then(() => {
@@ -154,7 +154,15 @@
             inputText.focus();
         }
         
-        normalizeBtn.addEventListener('click', handleNormalization);
+        // --- Attach Event Listeners ---
+        // Automatically normalize when user types (with debounce for performance)
+        inputText.addEventListener('input', debouncedHandleNormalization);
+        
+        // Also normalize instantly when the user changes the mode
+        modeRadios.forEach(radio => {
+            radio.addEventListener('change', handleNormalization);
+        });
+
         copyBtn.addEventListener('click', handleCopy);
         clearBtn.addEventListener('click', handleClear);
 
